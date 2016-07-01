@@ -24,10 +24,7 @@ public class JDBCTest {
 				result = rs.getString("id");
 				list.add(result);
 			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(list);

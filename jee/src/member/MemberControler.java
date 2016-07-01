@@ -14,34 +14,36 @@ import javax.swing.JOptionPane;
 */
 public class MemberControler {
 	public static void main(String[] args) {
-		MemberService service =new MemberServiceImpl();
-		
+		MemberService impl = MemberServiceImpl.getInstance();
 		while (true) {
 			switch (JOptionPane.showInputDialog("1. 등록 2. 보기 3. 수정 4.삭제 0.종료")){
 				
 			case "1":
-				int yes=JOptionPane.showConfirmDialog(null, "등록?");
-				if (yes==0) {
-				String id = JOptionPane.showInputDialog("아이디");
-				String pw = JOptionPane.showInputDialog("비밀번호");
-				String name = JOptionPane.showInputDialog("이름");
-				String ssn = JOptionPane.showInputDialog("주민번호 7자리");
-				service.registStudent(id, pw, name, ssn);
-				}
+				MemberBean stu = new MemberBean();
+				String input = JOptionPane.showInputDialog("ID,PW,이름,주민번호");
+				String[] inputArr = input.split(",");
+				stu.setId(inputArr[0]);
+				stu.setPw(inputArr[1]);
+				stu.setName(inputArr[2]);
+				stu.setSsn(inputArr[3]);
+				stu.setRegDate();
+				String result = impl.regist(stu);
+				JOptionPane.showMessageDialog(null, result);
+				
 				break;
 				
 			case "2":
-				JOptionPane.showMessageDialog(null,service.showStudent());
+				JOptionPane.showMessageDialog(null,impl.show());
 				break;
 			case "3":
 				String rpw=JOptionPane.showInputDialog("변경할 비밀번호");
-				service.updateStudent(rpw);
+				impl.update(rpw);
 				break;
 			case "4":
-				service.deleteStudent();
+				impl.delete();
 				break;
 			case "0" :
-				yes =JOptionPane.showConfirmDialog(null, "종료?");
+				int yes =JOptionPane.showConfirmDialog(null, "종료?");
 				if (yes==0) {
 					return;
 				}else{

@@ -10,8 +10,15 @@ package member;
  *@story  : 
 */
 public interface MemberService {
-	public void registStudent(String id,String pw,String name,String ssn);
-	public String showStudent();
-	public void updateStudent(String pw);
-	public void deleteStudent();
+	public String regist(MemberBean mem);
+	public String show();
+	public void update(String pw);
+	public void delete();
 }
+/*String sql = "";
+String sqlCreate ="create table member("
++"id varchar2(20) primary key,"
++"pw varchar2(20),"
++"name varchar2(20),"
++"reg_date varchar2(20),"
++"ssn varchar2(10))";*/

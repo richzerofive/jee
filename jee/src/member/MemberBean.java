@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 */
 public class MemberBean {
 	private String id,pw,name,regDate,gender,ssn; 
-	private int age;
+	private int birth;
 	
 	public MemberBean() {}
 	
@@ -33,7 +33,6 @@ public class MemberBean {
 		this.name = name;
 		this.ssn = ssn;
 		String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
-		this.regDate = now;
 		String[] ssnArr = ssn.split("-");
 		String[] nowArr = now.split("-");
 		int ageResult1 = (Integer.parseInt(ssnArr[0]));
@@ -44,22 +43,22 @@ public class MemberBean {
 		case 1: case 5: 
 			this.gender="남"; 
 			ageResult0 = ageResult2 - 1900-(ageResult1/10000);
-			this.age = ageResult0;
+			this.birth = ageResult0;
 			break;
 		case 3: case 7:
 			this.gender="남"; 
 			ageResult0 = ageResult2 - 2000-(ageResult1/10000);
-			this.age = ageResult0;
+			this.birth = ageResult0;
 			break;
 		case 2: case 6:
 			this.gender="여";
 			ageResult0 = ageResult2 - 1900-(ageResult1/10000);
-			this.age = ageResult0;
+			this.birth = ageResult0;
 			break;
 		case 4: case 8:
 			this.gender="여";
 			ageResult0 = ageResult2 - 2000-(ageResult1/10000);
-			this.age = ageResult0;
+			this.birth = ageResult0;
 			break;
 		default:
 			System.out.println("잘못된값이 입력됨");
@@ -86,8 +85,9 @@ public class MemberBean {
 	public String getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
+	public void setRegDate() {
+		String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+		this.regDate = now;
 	}
 	public String getGender() {
 		return gender;
@@ -102,10 +102,10 @@ public class MemberBean {
 		this.ssn = ssn;
 	}
 	public int getAge() {
-		return age;
+		return birth;
 	}
 	public void setAge(int age) {
-		this.age = age;
+		this.birth = age;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -113,7 +113,7 @@ public class MemberBean {
 	@Override
 	public String toString() {
 		return "학생 [아이디=" + id + ", 비번="+ pw + ", 이름=" + name + ", 등록일=" + regDate + ", 성별=" + gender
-				+ ", 주민번호=" + ssn + ", 나이=" + age + "]";
+				+ ", 주민번호=" + ssn + ", 나이=" + birth + "]";
 	}
 	
 

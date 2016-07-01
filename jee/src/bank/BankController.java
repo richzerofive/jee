@@ -20,6 +20,7 @@ public class BankController {
 		AccountBean bean = new AccountBean();
 		String spec = "";
 		String[] specArr = new String[3];
+		
 		while (true) {
 			switch (JOptionPane.showInputDialog("=======개인인터넷뱅킹=======\n"+"1.개설 2.입금 3.조회 4.출금 5.통장내역\n"+"=========은행창구=========\n "+"11.개설 12.조회(전체) 13.개좌번호조회 14.이름조회 15.개좌수 16.수정 17.해지 0.종료")) {
 					
