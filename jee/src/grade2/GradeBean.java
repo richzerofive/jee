@@ -1,8 +1,8 @@
-package grade;
+package grade2;
 
 public class GradeBean {
 	private int kor, eng, math,seq;
-	private String name;
+	private String name,hakjum;
 
 	public int getSeq() {
 		return seq;

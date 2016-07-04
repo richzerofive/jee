@@ -2,6 +2,7 @@ package member;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -30,9 +31,8 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String regist(MemberBean mem) {
 		String	msg = "";
-		String sql="insert into member(id,pw,name,reg_date,ssn)"
-				+ "values('"+mem.getId()+"','"+mem.getPw()+"','"+mem.getName()+"','"+mem.getRegDate()+"','"+mem.getSsn()+"')";
-		int result = dao.exeUpdate(sql);
+		
+		int result = dao.insert(mem);
 		if (result ==1) {
 				msg = "회원가입 축하";
 		} else {
@@ -46,13 +46,53 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void update(String pw) {
-		Student.setPw(pw);
+	public String update(MemberBean bean) {
+		String result = "";
+		 if (dao.update(bean)==1) {
+			result = "수정성공";
+		} else {
+			result = "수정실패";
+		}
+		 
+		 return result;
+	}	
+
+	@Override
+	public String delete(String id) {
+		String result = "";
+		 if (dao.delete(id)==1) {
+			result = "삭제성공";
+		} else {
+			result = "삭제실패";
+		}
+		 return result;
+		 
 	}
 
 	@Override
-	public void delete() {
-		Student = null;
+	public int count() {
+		return dao.count();
+	}
+
+	@Override
+	public MemberBean findById(String findID) {
+		MemberBean temp = dao.findById(findID);
+		MemberBean t2 = new MemberBean(temp.getId(),temp.getPw(),temp.getName(),temp.getSsn());
+		return t2;
+	}
+
+	@Override
+	public List<MemberBean> list() {
+		
+		return dao.List();
+	}
+
+	@Override
+	public List<MemberBean> findByName(String findNAME) {
+		List<MemberBean> temp2 = dao.findByName(findNAME);
+		
+		
+		return temp2;
 	}
 	
 }

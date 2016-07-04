@@ -16,7 +16,7 @@ public class MemberControler {
 	public static void main(String[] args) {
 		MemberService impl = MemberServiceImpl.getInstance();
 		while (true) {
-			switch (JOptionPane.showInputDialog("1. 등록 2. 보기 3. 수정 4.삭제 0.종료")){
+			switch (JOptionPane.showInputDialog(""+"--- 회원이 보는 화면\n"+"1.회원가입 2.로그인 3. 내정보보기(detail) 4.내정보수정(비번) 5.탈퇴 0.종료\n"+"---관리자 화면 ---\n"+"11.회원목록 12.검색(ID) 13.검색(이름) 14.검색(성별) 15.회원수")){
 				
 			case "1":
 				MemberBean stu = new MemberBean();
@@ -36,11 +36,37 @@ public class MemberControler {
 				JOptionPane.showMessageDialog(null,impl.show());
 				break;
 			case "3":
-				String rpw=JOptionPane.showInputDialog("변경할 비밀번호");
-				impl.update(rpw);
 				break;
 			case "4":
-				impl.delete();
+				MemberBean bean = new MemberBean();
+				String rpw=JOptionPane.showInputDialog("ID,변경할 비밀번호");
+				String[] inputRpw = rpw.split(",");
+				bean.setId(inputRpw[0]);
+				bean.setPw(inputRpw[1]);
+				JOptionPane.showMessageDialog(null,impl.update(bean));
+				break;
+			case "5":
+				String result2 =impl.delete(JOptionPane.showInputDialog("삭제할ID"));
+				
+				JOptionPane.showMessageDialog(null,result2);
+				break;
+			case "11":
+				JOptionPane.showMessageDialog(null, impl.list());
+				break;
+			case "12":
+				String findID=JOptionPane.showInputDialog("아이디입력");
+				JOptionPane.showMessageDialog(null, impl.findById(findID));
+				break;
+			case "13" :
+				String findNAME = JOptionPane.showInputDialog("이름입력");
+				JOptionPane.showMessageDialog(null, impl.findByName(findNAME));
+			case "14":
+				
+				break;
+			
+			case "15":
+				int count =impl.count();
+				JOptionPane.showMessageDialog(null, count);
 				break;
 			case "0" :
 				int yes =JOptionPane.showConfirmDialog(null, "종료?");
