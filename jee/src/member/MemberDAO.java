@@ -45,7 +45,7 @@ public class MemberDAO {
 		int updateResult =0;
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.ORACLE_ID,Constants.ORACLE_PW);
+			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.USER_ID,Constants.USER_PW);
 			stmt = con.createStatement();
 			updateResult = stmt.executeUpdate(sql);
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class MemberDAO {
 		MemberBean mem = null;
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.ORACLE_ID,Constants.ORACLE_PW);
+			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.USER_ID,Constants.USER_PW);
 			stmt = con.createStatement();
 			rs =stmt.executeQuery(sql);
 			while(rs.next()){
@@ -90,7 +90,7 @@ public class MemberDAO {
 		MemberBean temp = new MemberBean();
 			try {
 				Class.forName(Constants.ORACLE_DRIVER);
-				con =DriverManager.getConnection(Constants.ORACLE_URL,Constants.ORACLE_ID,Constants.ORACLE_PW);
+				con =DriverManager.getConnection(Constants.ORACLE_URL,Constants.USER_ID,Constants.USER_PW);
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
 				if (rs.next()) {
@@ -111,7 +111,7 @@ public class MemberDAO {
 		List<MemberBean> list2 = new ArrayList<MemberBean>();
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.ORACLE_ID,Constants.ORACLE_PW);
+			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.USER_ID,Constants.USER_PW);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -139,7 +139,7 @@ public class MemberDAO {
 		int count = 0;
 		try {
 			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.ORACLE_ID,Constants.ORACLE_PW);
+			con = DriverManager.getConnection(Constants.ORACLE_URL,Constants.USER_ID,Constants.USER_PW);
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {

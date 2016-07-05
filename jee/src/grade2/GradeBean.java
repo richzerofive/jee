@@ -1,52 +1,75 @@
 package grade2;
 
 public class GradeBean {
-	private int kor, eng, math,seq;
-	private String name,hakjum;
+	private String id,seq,date,grade;
+	private int java,sql,html,javascript;
 
-	public int getSeq() {
+	
+	private static GradeBean instance = new GradeBean();
+	public static GradeBean getInstance() {
+		return instance;
+	}
+	GradeBean() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+	public int getJava() {
+		return java;
+	}
+	public String getSeq() {
 		return seq;
 	}
-
-	public void setSeq(int seq) {
+	public void setSeq(String seq) {
 		this.seq = seq;
 	}
-
-	public void setKor() {
-		this.kor = kor;
+	public void setJava(int java) {
+		this.java = java;
 	}
-
-	public void setEng(int eng) {
-		this.eng = eng;
+	public int getSql() {
+		return sql;
 	}
-
-	public void setMath(int math) {
-		this.math = math;
+	public void setSql(int sql) {
+		this.sql = sql;
 	}
-	public void setName(String name){
-		this.name = name;
+	public int getHtml() {
+		return html;
 	}
-	public int getKor() {
-		return kor;
+	public void setHtml(int html) {
+		this.html = html;
 	}
-
-	public int getEng() {
-		return eng;
+	public int getJavascript() {
+		return javascript;
 	}
-
-	public int getMath() {
-		return math;
+	public void setJavascript(int javascript) {
+		this.javascript = javascript;
 	}
-	public String getName(){
-		return name;
+	public String getGrade() {
+		return grade;
 	}
-
+	public void setGrade(String level) {
+		this.grade=level;
+	}	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
-		return "GradeBean [kor=" + kor + ", eng=" + eng + ", math=" + math + ", seq=" + seq + ", name=" + name + "]";
+		return "No." + seq + ", 성적표 [이름:" + id + ", 학점:" + grade + "\n 자바:" + java + ", SQL:" + sql
+				+ ", HTML5:" + html + ", 자바스크립트:" + javascript + "]";
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 }

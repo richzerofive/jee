@@ -47,7 +47,6 @@ public class MemberControler {
 				break;
 			case "5":
 				String result2 =impl.delete(JOptionPane.showInputDialog("삭제할ID"));
-				
 				JOptionPane.showMessageDialog(null,result2);
 				break;
 			case "11":
