@@ -6,52 +6,47 @@ import java.util.List;
 
 public class GradeServiceImpl implements GradeService {
 	GradeDAO dao = GradeDAO.getInstance();
-	
-	private static GradeServiceImpl instance = new GradeServiceImpl(); 
+	private static GradeServiceImpl instance = new GradeServiceImpl();
 	public static GradeServiceImpl getInstance() {
 		return instance;
 	}
-	private GradeServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
+	private GradeServiceImpl() {}
 	@Override
 	public int insert(GradeBean grade) {
-		return dao.Create(grade);
-		}
-		
-	@Override
-	public String update(GradeBean grade) {
-		String result = "";
-		 if (dao.update(grade)==1) {
-			result = "수정성공";
-		} else {
-			result = "수정실패";
-		}
-		 
-		 return result;
+		return dao.insert(grade);
 	}
 
 	@Override
-	public String delete(String ID) {
-		String result = "";
-		 if (dao.delete(ID)==1) {
-			result = "삭제성공";
+	public void update(GradeBean grade) {
+		if (dao.update(grade)==1) {
+			System.out.println("성공");
 		} else {
-			result = "삭제실패";
+			System.out.println("실패");
 		}
-		 return result;
+	}
+
+	@Override
+	public String delete(String del) {
+		String msg = "";
+		if (dao.delete(del) == 1) {
+			msg = "삭제완료";
+		} else {
+			msg = "실패";
+		}
+			
+		return msg;
 	}
 
 	@Override
 	public List<GradeBean> list() {
-		List<GradeBean> list = dao.List();
+		List<GradeBean> list = dao.list();
 		return list;
 	}
 
 	@Override
 	public List<GradeBean> findById(String id) {
 		
-		return dao.findByHakjum(id);
+		return dao.findById(id);
 	}
 
 	@Override
@@ -60,15 +55,23 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public int count(String date) {
-		return dao.count(date);
+	public int count(String examDate) {
+		return dao.count(examDate);
 	}
 	@Override
-	public String GradeCal(GradeBean bean) {
-		// TODO Auto-generated method stub
-		return null;
+	public void score(String[] a) {
+		GradeBean g = new GradeBean();
+		g.setId(a[0]);
+		g.setExamDate(a[1]);
+		g.setJava(Integer.parseInt(a[2]));
+		g.setSql(Integer.parseInt(a[3]));
+		g.setHtml(Integer.parseInt(a[4]));
+		g.setJavascript(Integer.parseInt(a[5]));
+		this.insert(g);
 	}
-	}
+	
+
+}
 
 
 

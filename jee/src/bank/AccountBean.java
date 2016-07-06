@@ -23,8 +23,15 @@ public class AccountBean {
 	private String pw;
 	private String id;
 	
-	public AccountBean() {
+	
+	private static AccountBean instance = new AccountBean();
+	private AccountBean() {
 	}
+	
+	public static AccountBean getInstance() {
+		return instance;
+	}
+
 	public AccountBean(String name,String id,String pw) {
 		this.accountNo = String.valueOf((int) (Math.random() * 999999) + 100000);
 		this.name = name;

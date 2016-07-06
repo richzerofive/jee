@@ -7,8 +7,7 @@ create table member(
 			ssn varchar2(10)
 			);
 -- CREATE(ROW)			
-insert into member(id,pw,name,reg_date,ssn)
-values('lee2','1','이순신','2016-07-01','900101-1');
+insert into member(id,pw,name,reg_date,ssn)values('lee2','1','이순신','2016-07-01','900101-1');
 insert into member(id,pw,name,reg_date,ssn)
 values('hong2','1','홍길동','2015-07-01','991201-1');
 insert into member(id,pw,name,reg_date,ssn)

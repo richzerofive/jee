@@ -15,51 +15,24 @@ import global.Vendor;
 import member.MemberBean;
 
 public class GradeDAO {
-	private static GradeDAO instance = new GradeDAO();
-
-	private GradeDAO() {
-		con = DatabaseFactory.createDatabase(Vendor.ORACLE, Constants.USER_ID, Constants.USER_PW).getConnection();
-	}
-
-	public static GradeDAO getInstance() {
-		return instance;
-	}
 	Connection con;
 	ResultSet rs;
 	Statement stmt;
 	PreparedStatement pstmt;
-	int updateResult = 0;
-	String sql = "";
-	String sqlCreate = "create table grade(" + "kor int grade," + "eng int grade," + "math int grade,"
-			+ "name varchar2(20))";
-
-	String sqlDrop = "";
-
-	public List<GradeBean> List() {
-		List<GradeBean> list = new ArrayList<GradeBean>();
-		return list;
+	private static GradeDAO instance = new GradeDAO();
+		public static GradeDAO getInstance() {
+		return instance;
 	}
 
-	public int exeUpdate(String sql) {
-		int updateResult = 0;
-		try {
-			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL, Constants.USER_ID, Constants.USER_PW);
-			stmt = con.createStatement();
-			updateResult = stmt.executeUpdate(sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if (updateResult == 1) {
-			System.out.println("성공");
-		} else {
-			System.out.println("실패");
-		}
-		return updateResult;
+	private GradeDAO() {
+		con = DatabaseFactory
+				.createDatabase(Vendor.ORACLE, 
+						Constants.USER_ID, 
+						Constants.USER_PW)
+				.getConnection();
 	}
 
-	public int Create(GradeBean g) {
+	public int insert(GradeBean g){
 		int result = 0;
 		String sql="insert into grade(seq,grade,java,sql,html,javascript,id,exam_date)"
 				+ "values(seq.nextval,?,?,?,?,?,?,?)";
@@ -71,7 +44,7 @@ public class GradeDAO {
 			pstmt.setInt(4, g.getHtml());
 			pstmt.setInt(5, g.getJavascript());
 			pstmt.setString(6, g.getId());
-			pstmt.setString(7, g.getDate());
+			pstmt.setString(7, g.getExamDate());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -79,123 +52,134 @@ public class GradeDAO {
 		}
 		return result;
 	}
-	
-	
-	public int update(GradeBean bean) {
-		int revise = 0;
-		String sql = "update grade set ";
-		GradeService impl = GradeServiceImpl.getInstance();
+
+	public List<GradeBean> list() {
+		List<GradeBean> list = new ArrayList<GradeBean>();
+		String sql = "select * from grade";
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, String.valueOf(bean.getScore()));
-			pstmt.setString(2, bean.getSeq());
-			pstmt.executeUpdate();
-			bean = findBySeq(bean.getSeq());
-		String sql2 = "update grade set grade = ? where seq = ?";
-			pstmt = con.prepareStatement(sql2);
-			pstmt.setString(1, impl.GradeCal(bean));
-			pstmt.setString(2, bean.getSeq());
-			revise = pstmt.executeUpdate();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return revise;
-	}
-
-	public int delete(String Id) {
-		String sql = "delete from member where id ='" + Id + "'";
-		return exeUpdate(sql);
-	}
-
-	public List<GradeBean> findByHakjum(String id) {
-		List<GradeBean> result = null;
-		String sql = "select * from grade "
-				+ "where id = ?";
-			try {
-				pstmt = con.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					//seq,grade,java,sql,html,javascript,id,exam_date
-					GradeBean m6 = GradeBean.getInstance();
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		return result;
-	}
-
-	public GradeBean findById(int seq) {
-		String sql = "select * from member where seq '" + seq + "'";
-		GradeBean temp5 = new GradeBean();
-		try {
-			Class.forName(Constants.ORACLE_DRIVER);
-			con = DriverManager.getConnection(Constants.ORACLE_URL, Constants.USER_ID, Constants.USER_PW);
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				Integer.parseInt(rs.getString("JAVA"));
-				Integer.parseInt(rs.getString("SQL"));
-				Integer.parseInt(rs.getString("html"));
-				Integer.parseInt(rs.getString("javascript"));
-				rs.getString("ID");
-				rs.getString("date");
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				GradeBean g = new GradeBean();
+				g.setSeq(String.valueOf(rs.getInt("SEQ")));
+				g.setId(rs.getString("ID"));
+				g.setExamDate(rs.getString("EXAM_DATE"));
+				g.setGrade(rs.getString("GRADE"));
+				g.setJava(rs.getInt("JAVA"));
+				g.setHtml(rs.getInt("HTML"));
+				g.setJavascript(rs.getInt("JAVASCRIPT"));
+				g.setSql(rs.getInt("SQL"));
+				list.add(g);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return temp5;
+		return list;
 	}
 
-
-	public int count(String date) {
+	public int count(String examDate) {
 		int result = 0;
-		String sql ="select count(*) as count from grade"
+		String sql = "select count(*) as count from grade "
 				+ "where exam_date = ?";
 		
 		try {
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, date);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, examDate);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt("count");
 			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public GradeBean findBySeq(String seq) {
+		GradeBean bean = new GradeBean();
+		String sql = "select * from grade where seq = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(seq));
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				bean.setExamDate(rs.getString("EXAM_DATE"));
+				bean.setGrade(rs.getString("GRADE"));
+				bean.setHtml(rs.getInt("HTML"));
+				bean.setId(rs.getString("ID"));
+				bean.setJava(rs.getInt("JAVA"));
+				bean.setJavascript(rs.getInt("JAVASCIRPT"));
+				bean.setSeq(String.valueOf(rs.getInt("SEQ")));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	public List<GradeBean> findById(String id) {
+		List<GradeBean> list = new ArrayList<GradeBean>();
+		String sql= "select * from grade where id = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GradeBean bean = new GradeBean();
+				bean.setSeq(String.valueOf(rs.getInt("SEQ")));
+				bean.setExamDate(rs.getString("EXAM_DATE"));
+				bean.setJava(rs.getInt("JAVA"));
+				bean.setHtml(rs.getInt("HTML"));
+				bean.setSql(rs.getInt("SQL"));
+				bean.setJavascript(rs.getInt("JAVASCRIPT"));
+				bean.setId(rs.getString("ID"));
+				bean.setGrade(rs.getString("GRADE"));
+				list.add(bean);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	public int update(GradeBean grade) {
+		//"과목,점수,seq"
+		int result = 0;
+		String sql = "update grade set"+ grade.getSubject()+"="+grade.getScore()+ "where seq =?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,Integer.parseInt(grade.getSeq()));
+			result = pstmt.executeUpdate();
+		
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return result;
 	}
 
-	public GradeBean findBySeq(String seq) {
-		GradeBean result = null;
-		String sql ="select * from grade"
-				+"where seq = ?";
-		
-			try {
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, Integer.parseInt(seq));
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					//seq,grade,java,sql,html,javascript,id,exam_date
-					GradeBean m1 = GradeBean.getInstance();
-					m1.setDate(rs.getString("EXAM_DATE"));
-					m1.setSeq(rs.getString("SEQ"));
-					m1.setGrade(rs.getString("GRADE"));
-					m1.setJava(Integer.parseInt(rs.getString("Java")));
-					m1.setSql(Integer.parseInt(rs.getString("SQL")));
-					m1.setHtml(Integer.parseInt(rs.getString("HTML")));
-					m1.setJavascript(Integer.parseInt(rs.getString("JAVASCRIPT")));
-					m1.setId(rs.getString("ID"));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public int delete(String del) {
+		int result =0;
+		String sql = "delete from grade where seq = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(del));
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
-	}	
-
+	}
+	
 }

@@ -20,14 +20,13 @@ public class AccountServiceImpl implements AccountService {
 		return instance;
 	}
 	@Override
-	public String openAccount(String[] create) {
-			return dao.create(create);
+	public int openAccount(AccountBean bean) {
+			return dao.create(bean);
 	}
 
 	@Override
-	public void deposit(int inputMoney) {
-		// TODO Auto-generated method stub
-		
+	public int deposit(int money) {
+		return dao.deposit(money);
 	}
 
 	@Override

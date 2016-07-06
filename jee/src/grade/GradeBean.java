@@ -1,8 +1,9 @@
 package grade;
 
 public class GradeBean {
-	private String id,seq,date,grade,subject;
+	private String id,grade,seq,examDate,subject;
 	private int java,sql,html,javascript,score;
+	
 	
 	
 	public String getSubject() {
@@ -17,33 +18,20 @@ public class GradeBean {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	private static GradeBean instance = new GradeBean();
-	public static GradeBean getInstance() {
-		return instance;
+	public String getExamDate() {
+		return examDate;
 	}
-	GradeBean() {
-		// TODO Auto-generated constructor stub
-	}
-	
-
-	public String getDate() {
-		return date;
-	}
-
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-
-	public int getJava() {
-		return java;
+	public void setExamDate(String examDate) {
+		this.examDate = examDate;
 	}
 	public String getSeq() {
 		return seq;
 	}
 	public void setSeq(String seq) {
 		this.seq = seq;
+	}
+	public int getJava() {
+		return java;
 	}
 	public void setJava(int java) {
 		this.java = java;
@@ -66,22 +54,22 @@ public class GradeBean {
 	public void setJavascript(int javascript) {
 		this.javascript = javascript;
 	}
-	public String getGrade() {
-		return grade;
-	}
-	public void setGrade(String level) {
-		this.grade=level;
-	}	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	@Override
 	public String toString() {
-		return "No." + seq + ", 성적표 [이름:" + id + ", 학점:" + grade + "\n 자바:" + java + ", SQL:" + sql
-				+ ", HTML5:" + html + ", 자바스크립트:" + javascript + "]";
+		return "성적표 [No." + seq + ",아이디 :" + id + ", 학점 :" + grade + "\n"
+				+ "  자바 : " + java + ", SQL : " + sql
+				+ ", HTML5 : " + html + ", 자바스크립트 : " + javascript + "]";
 	}
-
 }

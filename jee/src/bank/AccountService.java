@@ -19,9 +19,9 @@ public interface AccountService {
 	// 1.개설 2.입금 3.출금4.수정5.해지6.조회(전체)7.조회(계좌번호)8.조회(이름)9.조회(전체통장수)
 	//accountBean <-> view
 	// 1.개설
-	public String openAccount(String[] create); 
+	public int openAccount(AccountBean bean); 
 	// 2.입금
-	public void deposit(int inputMoney); 
+	public int deposit(int money); 
 	// 3.출금
 	public String withdraw(int output);
 	//4. 수정..사용자의 요청에 의해 비번만 전환가능
