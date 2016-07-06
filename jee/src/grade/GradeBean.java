@@ -1,10 +1,22 @@
-package grade2;
+package grade;
 
 public class GradeBean {
-	private String id,seq,date,grade;
-	private int java,sql,html,javascript;
-
+	private String id,seq,date,grade,subject;
+	private int java,sql,html,javascript,score;
 	
+	
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	private static GradeBean instance = new GradeBean();
 	public static GradeBean getInstance() {
 		return instance;

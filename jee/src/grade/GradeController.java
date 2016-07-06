@@ -1,7 +1,7 @@
 /**
  * 
  */
-package grade2;
+package grade;
 
 import javax.swing.JOptionPane;
 
@@ -33,37 +33,35 @@ public class GradeController {
 				bean.setSql(Integer.parseInt(inputArr[3]));
 				bean.setHtml(Integer.parseInt(inputArr[4]));
 				bean.setJavascript(Integer.parseInt(inputArr[5]));
-				String result = service.insert(bean);
-				JOptionPane.showMessageDialog(null, result);
+				service.insert(bean);
+				
 				break;
 			case "2":
-				String update = JOptionPane.showInputDialog("ID,java,sql,html,javascript 입력");
+				String update = JOptionPane.showInputDialog("과목,점수,seq");
 					String[] updateArr = update.split(",");
-					bean.setId(updateArr[0]);
-					bean.setJava(Integer.parseInt(updateArr[1]));
-					bean.setSql(Integer.parseInt(updateArr[2]));
-					bean.setHtml(Integer.parseInt(updateArr[3]));
-					bean.setJavascript(Integer.parseInt(updateArr[4]));
-					JOptionPane.showMessageDialog(null, service.insert(bean));
+					bean.setSubject(updateArr[0]);
+					bean.setScore(Integer.parseInt(updateArr[1]));
+					bean.setSeq(updateArr[2]);
+					service.update(bean);
 				break;
 			case "3":
 				String delete=JOptionPane.showInputDialog("삭제할ID");
 					service.delete(delete);
 				break;
 			case "4":
-				JOptionPane.showMessageDialog(null, service.list());
+				//JOptionPane.showMessageDialog(null, service.list());
+				GradeUI ui = new GradeUI();
 				break;
 			case "5":
-				String hakjum=JOptionPane.showInputDialog("학점입력");
-					service.findByHakjum(hakjum);
-				break;
-			case "6":
-				int seq = Integer.parseInt(JOptionPane.showInputDialog("seq입력"));
+				String seq = JOptionPane.showInputDialog("seq입력");
 				service.findBySeq(seq);
 				break;
+			case "6":
+				String sid = JOptionPane.showInputDialog("ID");
+				JOptionPane.showMessageDialog(null, service.findById(sid));
 			case "7":
-				String inputDate = JOptionPane.showInputDialog("날짜입력");
-					service.count(inputDate);
+				String date = JOptionPane.showInputDialog("시험일자");
+				JOptionPane.showMessageDialog(null, service.count(date)+"명");
 				break;
 			case "0":return;
 			default:

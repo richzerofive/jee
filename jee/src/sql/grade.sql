@@ -34,7 +34,49 @@ select * from grade where id = 'hong';
 --read : count
 select count(*) from grade;
 --update : update
-update grade set exam_date = '2016-05'
-where seq = 1000;
+update grade set exam_date = '2016-05' where seq = 1000;
 --delete : delete
 delete from grade where seq = '1000';
+
+-------------------------------------------------------------
+
+--뷰 권한주기
+--sqlplus system/gksqlc
+--grant dba to gksqlc;
+
+create view grade_view
+as select * from grade;
+
+select * from grade_view;
+
+drop view grade_view;
+
+--join 조인 
+
+create view grade_member as
+select 
+			g.seq as seq,
+			g.grade as grade, 
+			g.java as java,
+			g.sql as sql,
+			g.html as html,
+			g.javascript as js,
+			g.exam_date as exam_date,
+			m.id as id, 
+			m.pw as pw,
+			m.name as name,
+			m.reg_date as reg_date,
+			m.ssn as ssn
+from member m,grade g
+where m.id = g.id;
+
+select 
+	id,
+	name,
+	grade,
+	java,
+	sql,
+	html,
+	js
+from grade_member;
+

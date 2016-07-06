@@ -1,7 +1,7 @@
 /**
  * 
  */
-package bank;
+package bank2;
 
 import java.util.Random;
 
@@ -16,15 +16,19 @@ import global.Constants;
  * @story :
  */
 public class AccountBean {
-		
 	private String accountNo; // 인스턴스 변수는 초기화를 하지 않는다
 	private String name;
 	private int money;
 	private String pw;
 	private String id;
 	
+	
 	public AccountBean() {
 	}
+	
+	
+	
+	
 	public AccountBean(String name,String id,String pw) {
 		this.accountNo = String.valueOf((int) (Math.random() * 999999) + 100000);
 		this.name = name;
